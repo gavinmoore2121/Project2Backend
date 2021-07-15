@@ -25,6 +25,8 @@ public class Pin {
   category
    */
 
+  public Pin() {}
+
   public Pin(String name, String desc, double latitude, double longitude, String ownerUsername) {
     this.name = name;
     this.desc = desc;
