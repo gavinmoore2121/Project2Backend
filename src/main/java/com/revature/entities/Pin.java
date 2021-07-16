@@ -3,7 +3,7 @@ package com.revature.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pin")
+@Table(name = "PIN")
 public class Pin {
   @Id
   @GeneratedValue
@@ -23,7 +23,7 @@ public class Pin {
   private double longitude;
 
   @ManyToOne
-  @Column(name = "ownerusername_fk")
+  @Column(name = "owner")
   private User owner;
   /*
   potential add-ons:
