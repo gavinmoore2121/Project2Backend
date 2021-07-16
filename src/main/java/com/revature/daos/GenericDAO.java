@@ -9,8 +9,20 @@ import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Generic Data Access Object interface.
+ *
+ * Contains static methods to perform CRUD operations on generic entities in a database using the Hibernate API.
+ * @author Gavin Moore
+ * @version 1.0
+ */
 public interface GenericDAO {
 
+    /**
+     * Retrieve all entities of the given class in the database.
+     * @param type The class of entity to retrieve.
+     * @return A list of all entities of the given type stored in the database.
+     */
     static <T> List<T> getAllEntities(Class<T> type) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaQuery<T> criteria = session.getCriteriaBuilder().createQuery(type);
@@ -20,13 +32,23 @@ public interface GenericDAO {
         return result;
     }
 
-    static <T, ID extends Serializable> T getEntity(Class<T> type, ID uniqueID) {
+    /**
+     * Retrieve an entity by their unique ID.
+     * @param type The class of entity to retrieve.
+     * @param uniqueID The serializable, primary key of the entity.
+     * @return The entity with the given primary key.
+     */
+    static <T, ID extends Serializable> T getEntityByID(Class<T> type, ID uniqueID) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         T result = session.get(type, uniqueID);
         session.close();
         return result;
     }
 
+    /**
+     * Save an entity to the database.
+     * @param entity The entity to save, defined in javax.persistence.
+     */
     static <T> void save(T entity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = session.beginTransaction();
@@ -35,6 +57,10 @@ public interface GenericDAO {
         session.close();
     }
 
+    /**
+     * Update an existing entity within a database.
+     * @param entity The pre-existing entity to update, defined in javax.persistence.
+     */
     static <T> void update(T entity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = session.beginTransaction();
@@ -42,7 +68,11 @@ public interface GenericDAO {
         trans.commit();
         session.close();
     }
-    
+
+    /**
+     * Delete an existing entity from the database.
+     * @param entity The pre-existing entity to delete, defined in javax.persistence.
+     */
     static <T> void delete(T entity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = session.beginTransaction();

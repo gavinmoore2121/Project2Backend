@@ -1,36 +1,77 @@
 package com.revature.daos;
 
+import com.revature.entities.Pin;
 import com.revature.entities.User;
-import com.revature.utilties.hibernate.HibernateUtil;
-import org.hibernate.Session;
 
 import java.util.List;
 
 /**
- * Class containing controls for CRUD operations on the user table.
- * Operates via the Hibernate API.
+ * A database-access object interface to retrieve User objects from the database.
+ *
+ * Utilizes the Hibernate API and the GenericDao interface to perform CRUD operations and
+ * retrieve necessary properties.
  *
  * @author Gavin Moore
  * @version 1.0
  */
-public class UserDAO {
+public interface UserDAO extends GenericDAO {
     /**
-     * Retrieve a user based on their unique email.
-     * @param email the email the user registered their account with.
-     * @return The user with the provided email.
+     * Find and return a User by it's unique email.
+     * @param email the email of the user to find.
+     * @return The User with the given email, or null.
      */
-    public static User getUser(String email) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        User user = session.get(User.class, email);
-        session.close();
-        return user;
+    static User getUserByEmail(String email) {
+        return GenericDAO.getEntityByID(User.class, email);
     }
 
-
-    public static List<User> getAllUsers() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<User> users = session.createCriteria(User.class);
-        session.close();
-        return user;
+    /**
+     * Return all users currently saved in the database.
+     * @return A list of all user objects in the database.
+     */
+    static List<User> getAllUsers() {
+        return GenericDAO.getAllEntities(User.class);
     }
+
+    /**
+     * Find all pins that the user owns.
+     * @param email the email of the user.
+     * @return A list of all user pins.
+     */
+    static List<Pin> getAllUserPinsByEmail(String email) {
+        return getAllUserPinsFromUser(getUserByEmail(email));
+    }
+
+    /**
+     * Find all pins the user owns.
+     * @param user the user.
+     * @return A list of all user pins.
+     */
+    static List<Pin> getAllUserPinsFromUser(User user) {
+        return user.getUserPins();
+    }
+
+    /**
+     * Updates all fields of the database entry with the matching email to the properties of the user.
+     * @param user the user with updated properties.
+     */
+    static void updateUser(User user) {
+        GenericDAO.update(user);
+    }
+
+    /**
+     * Delete the user with the matching email.
+     * @param user the user to delete.
+     */
+    static void deleteUser(User user) {
+        GenericDAO.delete(user);
+    }
+
+    /**
+     * Save a user as a new database entry.
+     * @param user the user to save.
+     */
+    static void saveUser(User user) {
+        GenericDAO.save(user);
+    }
+
 }
