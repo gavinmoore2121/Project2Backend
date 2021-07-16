@@ -1,7 +1,9 @@
+package com.revature.entities;
+
 import java.util.List;
 
 @Entity
-@Table(name = "User")
+@Table(name = "com.revature.entities.User")
 public class User {
   @Id
   @Column(name = "email")
@@ -62,7 +64,7 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
+    return "com.revature.entities.User{" +
       "email='" + email + '\'' +
       ", displayName='" + displayName + '\'' +
       ", password='" + password + '\'' +

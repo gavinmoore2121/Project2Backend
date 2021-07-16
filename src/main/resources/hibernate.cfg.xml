@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- Database Connection Settings -->
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@database-1.c4jlsnvzskpp.us-east-2.rds.amazonaws.com:1521:P1DB</property>
+		<property name="hibernate.connection.username">admin</property>
+		<property name="hibernate.connection.password">AWSSn0wboard21!</property>
+
+		<!-- SQL Dialect -->
+		<property name="hibernate.connection.driver_class"></property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+		<!-- show all generate SQL query -->
+		<property name="show_sql">false</property>
+
+		<!-- create necessary tables. change to validate when ready to deploy. -->
+		<property name="hbm2ddl.auto">update</property>
+
+		<!-- Mention here all the model classes along with their package name -->
+		<mapping class="com.revature.entities.Pin" />
+		<mapping class="com.revature.entities.User" />
+	</session-factory>
+</hibernate-configuration>
