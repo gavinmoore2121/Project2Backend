@@ -23,6 +23,8 @@ public class User {
   name
    */
 
+  public User() {}
+
   public User(String email, String displayName, String password, List<Pin> userPins) {
     this.email = email;
     this.displayName = displayName;
