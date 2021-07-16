@@ -32,7 +32,8 @@ public class Pin {
 
   public Pin() {}
 
-  public Pin(String name, String desc, double latitude, double longitude, User owner) {
+
+  public Pin(String name, String desc, double latitude, double longitude, String ownerUsername) {
     this.name = name;
     this.desc = desc;
     this.latitude = latitude;
