@@ -1,9 +1,12 @@
 package com.revature.entities;
 
+import javax.persistence.*;
+
 @Entity
 @Table(name = "pin")
 public class Pin {
-  @Id @GeneratedValue
+  @Id
+  @GeneratedValue
   @Column(name = "id")
   private int id;
 
@@ -21,18 +24,20 @@ public class Pin {
 
   @ManyToOne
   @Column(name = "ownerusername_fk")
-  private String ownerUsername;
+  private User owner;
   /*
   potential add-ons:
   category
    */
 
-  public Pin(String name, String desc, double latitude, double longitude, String ownerUsername) {
+  public Pin() {}
+
+  public Pin(String name, String desc, double latitude, double longitude, User owner) {
     this.name = name;
     this.desc = desc;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.ownerUsername = ownerUsername;
+    this.owner = owner;
   }
 
   public int getId() {
@@ -75,12 +80,12 @@ public class Pin {
     this.longitude = longitude;
   }
 
-  public String getOwnerUsername() {
-    return ownerUsername;
+  public User getOwner() {
+    return owner;
   }
 
-  public void setOwnerUsername(String ownerUsername) {
-    this.ownerUsername = ownerUsername;
+  public void setOwnerUsername(User owner) {
+    this.owner = owner;
   }
 
   @Override
