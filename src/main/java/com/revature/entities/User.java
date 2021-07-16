@@ -1,5 +1,6 @@
 package com.revature.entities;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
