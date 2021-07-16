@@ -1,3 +1,5 @@
+package com.revature.entities;
+
 @Entity
 @Table(name = "pin")
 public class Pin {
@@ -83,7 +85,7 @@ public class Pin {
 
   @Override
   public String toString() {
-    return "Pin{" +
+    return "com.revature.entities.Pin{" +
       "name='" + name + '\'' +
       ", desc='" + desc + '\'' +
       ", latitude=" + latitude +
