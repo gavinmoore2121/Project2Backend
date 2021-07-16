@@ -1,13 +1,16 @@
+package com.revature.entities;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "User")
+@Table(name = "USER")
 public class User {
   @Id
   @Column(name = "email")
   private String email;
 
-  @Column(name = "displayname")
+  @Column(name = "display_name")
   private String displayName;
 
   @Column(name = "password")
@@ -64,7 +67,7 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
+    return "com.revature.entities.User{" +
       "email='" + email + '\'' +
       ", displayName='" + displayName + '\'' +
       ", password='" + password + '\'' +
