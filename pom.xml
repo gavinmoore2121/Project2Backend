@@ -7,6 +7,11 @@
     <groupId>org.example</groupId>
     <artifactId>Project2Backend</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>Project2BackendSpring</name>
+    <!-- Update to necessary URL later !-->
+    <url>https://www.project2backend.com</url>
 
     <repositories>
         <repository>
@@ -21,6 +26,16 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.3.7</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

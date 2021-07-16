@@ -1,0 +1,36 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <!-- Add the location of application-context.xml as a context parameter to make it available in the
+      servlet context and also available to the ContextLoaderListener -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>src/main/webapp/WEB-INF/application-context.xml</param-value>
+    </context-param>
+    <!-- Register the Springframework ContextLoaderListener which will create the ApplicationContext -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- Register the DispatchServlet, it will also need the a context config -->
+    <servlet>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>src/main/webapp/WEB-INF/application-context.xml</param-value>
+        </init-param>
+        <!-- load on startup to complete context creation before the first request -->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- Map the Dispatcher servlet
+       Mapping the servlet to the root '/' will cause some complications
+       if you are planning to serve some static content directly (like index.html)
+       it is common practice to serve web request to non-static content behind a
+       prefix (like /api) -->
+    <servlet-mapping>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+</web-app>
