@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 //TODO this class will map all necessary functions to Spring services and servlets.
 
 @Controller
+@RequestMapping("mapping")
 public class MappingService implements PinDAO, UserDAO {
 
     /**
@@ -22,12 +23,19 @@ public class MappingService implements PinDAO, UserDAO {
      * @return The user's full account as a JSON object, or a not-found response.
      */
     @RequestMapping(value = "/validateLogin", method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public static ResponseEntity<User> validateLogin(@RequestBody LoginForm loginForm) {
+    @ResponseBody
+    public ResponseEntity<User> validateLogin(@RequestBody LoginForm loginForm) {
         User currentUser = UserDAO.getUserByEmail(loginForm.getUsername());
         if (currentUser.getPassword().equals(loginForm.getPassword())) {
-            return ResponseEntity.ok(currentUser);
+            return new ResponseEntity<>(currentUser, HttpStatus.OK);
         }
-        else return ResponseEntity.notFound().build();
+        else return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/testConnection")
+    @ResponseBody
+    public ResponseEntity<String> checkPage(@RequestParam(value = "id", defaultValue = "1") Integer id) {
+        return new ResponseEntity<>("Connection valid, here's a number: " + id + "!", HttpStatus.OK);
     }
 
 }
