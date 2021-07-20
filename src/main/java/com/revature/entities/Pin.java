@@ -37,7 +37,7 @@ public class Pin {
     this.desc = desc;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.owner = owner;
+    this.owner = ownerUsername;
   }
 
   public int getId() {

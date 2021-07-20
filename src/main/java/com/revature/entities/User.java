@@ -65,6 +65,8 @@ public class User {
     this.userPins = userPins;
   }
 
+  public void addPin(Pin pin) { this.userPins.add(pin);}
+
   @Override
   public String toString() {
     return "com.revature.entities.User{" +

@@ -7,7 +7,7 @@
       servlet context and also available to the ContextLoaderListener -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>src/main/webapp/WEB-INF/application-context.xml</param-value>
+        <param-value>WEB-INF/application-context.xml</param-value>
     </context-param>
     <!-- Register the Springframework ContextLoaderListener which will create the ApplicationContext -->
     <listener>
@@ -19,7 +19,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>src/main/webapp/WEB-INF/application-context.xml</param-value>
+            <param-value>WEB-INF/application-context.xml</param-value>
         </init-param>
         <!-- load on startup to complete context creation before the first request -->
         <load-on-startup>1</load-on-startup>
