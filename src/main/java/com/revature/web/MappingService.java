@@ -16,7 +16,6 @@ import java.util.List;
 //TODO this class will map all necessary functions to Spring services and servlets.
 
 @Controller
-@RequestMapping("mapping")
 public class MappingService implements PinDAO, UserDAO {
 
     @RequestMapping(value= "/testConnection", method= RequestMethod.GET, produces= MediaType.TEXT_HTML_VALUE)
