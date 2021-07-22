@@ -1,9 +1,15 @@
 package com.revature.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "PIN")
+// @JsonRootName(value = "pin")
+@XmlRootElement
 public class Pin {
   @Id
   @GeneratedValue
@@ -24,6 +30,7 @@ public class Pin {
 
   @ManyToOne
   @Column(name = "owner")
+  @JsonBackReference
   private User owner;
   /*
   potential add-ons:

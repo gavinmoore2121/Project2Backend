@@ -11,16 +11,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
 import java.util.List;
 
-//TODO this class will map all necessary functions to Spring services and servlets.
 
+/**
+ * A Controller class utilizing the Spring MVC API to query the user database and return appropriate results.
+ */
 @Controller
 public class MappingService implements PinDAO, UserDAO {
 
+    /**
+     * A test method that returns a simple response to a get-request.
+     * @param id The number to print, placed in the url.
+     */
     @RequestMapping(value= "/testConnection", method= RequestMethod.GET, produces= MediaType.TEXT_HTML_VALUE)
     @ResponseBody
-    public ResponseEntity<String> checkPage(@RequestParam(value = "id", defaultValue = "1") Integer id) {
+    public ResponseEntity<String> basicGetMethod(@RequestParam(value = "id", defaultValue = "1") Integer id) {
         return new ResponseEntity<>("Connection valid, here's a number: " + id + "!", HttpStatus.OK);
     }
 
@@ -30,50 +38,51 @@ public class MappingService implements PinDAO, UserDAO {
      *                 email and password attempt respectively.
      * @return The user's full account as a JSON object, or a not-found response.
      */
-    @RequestMapping(value = "/validateLogin", method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/validateLogin", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<User> validateLogin(@RequestBody LoginForm loginForm) {
         User currentUser = UserDAO.getUserByEmail(loginForm.getUsername());
         if (currentUser.getPassword().equals(loginForm.getPassword())) {
             return new ResponseEntity<>(currentUser, HttpStatus.OK);
         }
-        else return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        else return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value= "/getUserPins", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/getUserPins", method= RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Pin>> getUserPins(@RequestBody User user) {
         return new ResponseEntity<List<Pin>>(user.getUserPins(), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/updateUser", method= RequestMethod.PUT)
+    @RequestMapping(value = "/updateUser", method= RequestMethod.PUT, produces= MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity updateUser(@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
         UserDAO.updateUser(user);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.POST)
+    @PostMapping(value = "/createUser", produces= MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity createUser(@RequestBody User user) {
-        UserDAO.saveUser(user);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        System.out.println(user);
+        //UserDAO.saveUser(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/createPin", method = RequestMethod.POST)
+    @PostMapping(value = "/createPin", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity createPin(@RequestBody Pin pin) {
-        PinDAO.savePin(pin);
-        return ResponseEntity.noContent().build();
+    public  ResponseEntity<Pin> createPin(@RequestBody Pin pin) {
+        System.out.println(pin);
+        //PinDAO.savePin(pin);
+        return new ResponseEntity<>(pin, HttpStatus.OK);
     }
 
 
     // This one might trigger foreign key constaints and fail, will be tested later.
-    @RequestMapping(value = "/deletePin", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deletePin", method = RequestMethod.DELETE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity deletePin(@RequestBody Pin pin) {
         PinDAO.deletePin(pin);
