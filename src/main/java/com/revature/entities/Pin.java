@@ -19,17 +19,17 @@ public class Pin {
   @Column(name = "name")
   private String name;
 
-  @Column(name = "desc")
+  @Column(name = "descript")
   private String desc;
 
   @Column(name = "lat")
   private double latitude;
 
-  @Column(name = "long")
+  @Column(name = "longitude")
   private double longitude;
 
-  @ManyToOne
-  @Column(name = "owner")
+  @ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+  @JoinColumn(name="owner_email", referencedColumnName="email", foreignKey = @ForeignKey(name="USER_PIN_OWNER_FK"), nullable= true)
   @JsonBackReference
   private User owner;
   /*
