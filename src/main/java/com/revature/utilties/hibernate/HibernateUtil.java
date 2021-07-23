@@ -40,23 +40,6 @@ public class HibernateUtil {
 		// Configure base details from hibernate.cfg.xml
 		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder().configure();
 
-		// If file exists, configure URL, username, and password from DatabaseDetails.info.
-		try (BufferedReader databaseDetailReader = getDatabaseDetailsFileReader()) {
-			String url = databaseDetailReader.readLine();
-			String username = databaseDetailReader.readLine();
-			String password = databaseDetailReader.readLine();
-			
-			registryBuilder.applySetting("hibernate.connection.url", url);
-			registryBuilder.applySetting("hibernate.connection.username", username);
-			registryBuilder.applySetting("hibernate.connection.password", password);
-		} catch (IOException e) {
-			/* 
-			 * Indicates DatabaseDetails.info file was not read or is improperly formatted. Configure account details
-			 * from hibernate.cfg.xml if possible.
-			 */
-			System.out.println(e.getMessage());
-		} 
-		
 		// Complete SessionFactory instantiation.
 		MetadataSources sources = new MetadataSources(registryBuilder.build());
 		Metadata metadata = sources.getMetadataBuilder().build();
