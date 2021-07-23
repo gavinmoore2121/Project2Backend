@@ -20,7 +20,7 @@ public interface PinDAO extends GenericDAO {
      * @param id The ID of the desired pin.
      * @return The pin with the given ID, or null.
      */
-    static Pin getPinByID(int id) {
+    default Pin getPinByID(int id) {
         return GenericDAO.getEntityByID(Pin.class, id);
     }
 
@@ -28,7 +28,7 @@ public interface PinDAO extends GenericDAO {
      * Return all Pins currently saved in the database.
      * @return All pins in the database, or null.
      */
-    static List<Pin> getAllPins() {
+    default List<Pin> getAllPins() {
         return GenericDAO.getAllEntities(Pin.class);
     }
 
@@ -37,7 +37,7 @@ public interface PinDAO extends GenericDAO {
      * @param pin The pin to find the owner of.
      * @return The owner of the pin, or null.
      */
-    static User getPinOwnerFromPin(Pin pin) {
+    default User getPinOwnerFromPin(Pin pin) {
         return pin.getOwner();
     }
 
@@ -46,7 +46,7 @@ public interface PinDAO extends GenericDAO {
      * @param id The ID number of the pin.
      * @return The User who owns the pin, or null.
      */
-    static User getPinOwnerByPinID(int id) {
+    default User getPinOwnerByPinID(int id) {
         return getPinOwnerFromPin(getPinByID(id));
     }
 
@@ -55,7 +55,7 @@ public interface PinDAO extends GenericDAO {
      * ID number to the properties of the given pin.
      * @param pin The pin to update, with new properties saved.
      */
-    static void updatePin(Pin pin) {
+    default void updatePin(Pin pin) {
         GenericDAO.update(pin);
     }
 
@@ -63,7 +63,7 @@ public interface PinDAO extends GenericDAO {
      * Deletes the given pin from the database.
      * @param pin the pin to delete.
      */
-    static void deletePin(Pin pin) {
+    default void deletePin(Pin pin) {
         GenericDAO.delete(pin);
     }
 
@@ -71,7 +71,7 @@ public interface PinDAO extends GenericDAO {
      * Saves a pin to the database.
      * @param pin the pin to save.
      */
-    static void savePin(Pin pin) {
+    default void savePin(Pin pin) {
         GenericDAO.save(pin);
     }
 

@@ -1,10 +1,12 @@
 package com.revature.web;
 
+import com.revature.daos.DAOService;
 import com.revature.daos.PinDAO;
 import com.revature.daos.UserDAO;
 import com.revature.entities.LoginForm;
 import com.revature.entities.Pin;
 import com.revature.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import java.util.List;
  * A Controller class utilizing the Spring MVC API to query the user database and return appropriate results.
  */
 @Controller
-public class MappingService implements PinDAO, UserDAO {
+public class MappingService {
 
     /**
      * A test method that returns a simple response to a get-request.
@@ -35,16 +37,13 @@ public class MappingService implements PinDAO, UserDAO {
      * @param loginForm: A JSON object containing the fields username and password, containing the user-input
      *                 email and password attempt respectively. Appropriately formatted JSON is '"username":
      *                 "userInputUsername", "password": "userInputPassword"'.
-     * @return The user's full account as a JSON object, or a not-found response.
+     * @return The user's full account as a JSON object, or a null reference.
      */
     @RequestMapping(value = "/validateLogin", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<User> validateLogin(@RequestBody LoginForm loginForm) {
-        User currentUser = UserDAO.getUserByEmail(loginForm.getUsername());
-        if (currentUser.getPassword().equals(loginForm.getPassword())) {
-            return new ResponseEntity<>(currentUser, HttpStatus.OK);
-        }
-        else return new ResponseEntity<>(null, HttpStatus.OK);
+    public ResponseEntity<User> validateLogin(@RequestBody LoginForm loginForm, @Autowired DAOService daoService) {
+        User currentUser = daoService.validateLogin(loginForm);
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
 
@@ -67,8 +66,8 @@ public class MappingService implements PinDAO, UserDAO {
      */
     @RequestMapping(value = "/updateUser", method= RequestMethod.PUT, produces= MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        UserDAO.updateUser(user);
+    public ResponseEntity<User> updateUser(@RequestBody User user, @Autowired DAOService daoService) {
+        daoService.updateUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -79,8 +78,8 @@ public class MappingService implements PinDAO, UserDAO {
      */
     @PostMapping(value = "/createUser", produces= MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        UserDAO.saveUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user, @Autowired DAOService daoService) {
+        daoService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -91,14 +90,13 @@ public class MappingService implements PinDAO, UserDAO {
      */
     @PostMapping(value = "/createPin", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public  ResponseEntity<Pin> createPin(@RequestBody Pin pin) {
-        PinDAO.savePin(pin);
+    public  ResponseEntity<Pin> createPin(@RequestBody Pin pin, @Autowired DAOService daoService) {
+        daoService.savePin(pin);
         return new ResponseEntity<>(pin, HttpStatus.OK);
     }
 
 
-    // This one might trigger foreign key constaints and fail, will be tested later.
-
+    // This one might trigger foreign key constraints and fail, will be tested later.
     /**
      * Delete a pin from the database.
      * @param pin: The pin in JSON format, with the properties "name", "desc", "lat", and "long".
@@ -106,8 +104,8 @@ public class MappingService implements PinDAO, UserDAO {
      */
     @RequestMapping(value = "/deletePin", method = RequestMethod.DELETE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity deletePin(@RequestBody Pin pin) {
-        PinDAO.deletePin(pin);
+    public ResponseEntity deletePin(@RequestBody Pin pin, @Autowired DAOService daoService) {
+        daoService.deletePin(pin);
         return ResponseEntity.noContent().build();
     }
 
