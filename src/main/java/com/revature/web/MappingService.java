@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
 import java.util.List;
 
 
@@ -50,13 +48,23 @@ public class MappingService implements PinDAO, UserDAO {
     }
 
 
+    /**
+     * Get a list all pins a user owns.
+     * @param user: The user in JSON, with the properties "email", "displayName", "password" and "userPins".
+     * @return A list of all user pins in JSON format, with the properties "name", "desc", "lat", and "long".
+     */
     @RequestMapping(value= "/getUserPins", method= RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Pin>> getUserPins(@RequestBody User user) {
         return new ResponseEntity<List<Pin>>(user.getUserPins(), HttpStatus.OK);
     }
 
-
+    /**
+     * Update a user in the database with new information. The user in the database with the
+     * matching email will be changed.
+     * @param user: The user in JSON, with the properties "email", "displayName", "password" and "userPins".
+     * @return The updated user.
+     */
     @RequestMapping(value = "/updateUser", method= RequestMethod.PUT, produces= MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<User> updateUser(@RequestBody User user) {
@@ -64,25 +72,38 @@ public class MappingService implements PinDAO, UserDAO {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-
+    /**
+     * Create a user and add it the database.
+     * @param user: The user in JSON, with the properties "email", "displayName", "password" and "userPins".
+     * @return The created user.
+     */
     @PostMapping(value = "/createUser", produces= MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        System.out.println(user);
-        //UserDAO.saveUser(user);
+        UserDAO.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    /**
+     * Create a pin and add it to the database.
+     * @param pin: The pin in JSON format, with the properties "name", "desc", "lat", and "long".
+     * @return The newly created pin.
+     */
     @PostMapping(value = "/createPin", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public  ResponseEntity<Pin> createPin(@RequestBody Pin pin) {
-        System.out.println(pin);
-        //PinDAO.savePin(pin);
+        PinDAO.savePin(pin);
         return new ResponseEntity<>(pin, HttpStatus.OK);
     }
 
 
     // This one might trigger foreign key constaints and fail, will be tested later.
+
+    /**
+     * Delete a pin from the database.
+     * @param pin: The pin in JSON format, with the properties "name", "desc", "lat", and "long".
+     * @return A response entity with an empty body.
+     */
     @RequestMapping(value = "/deletePin", method = RequestMethod.DELETE, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity deletePin(@RequestBody Pin pin) {
