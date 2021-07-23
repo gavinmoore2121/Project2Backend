@@ -1,8 +1,6 @@
 package com.revature.web;
 
 import com.revature.daos.DAOService;
-import com.revature.daos.PinDAO;
-import com.revature.daos.UserDAO;
 import com.revature.entities.LoginForm;
 import com.revature.entities.Pin;
 import com.revature.entities.User;
