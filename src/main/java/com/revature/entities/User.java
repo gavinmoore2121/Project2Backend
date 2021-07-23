@@ -1,10 +1,15 @@
 package com.revature.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Entity
 @Table(name = "USER")
+// @JsonRootName(value = "user")
 public class User {
   @Id
   @Column(name = "email")
@@ -17,6 +22,7 @@ public class User {
   private String password; // might want to encrypt this at some point
 
   @OneToMany
+  @JsonManagedReference
   private List<Pin> userPins;
   /*
   potential add-ons:
