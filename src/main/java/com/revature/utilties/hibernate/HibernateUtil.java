@@ -45,24 +45,4 @@ public class HibernateUtil {
 		Metadata metadata = sources.getMetadataBuilder().build();
 		sessionFactory = metadata.getSessionFactoryBuilder().build();
 	}
-	
-	/**
-	 * Validate the location of the DatabaseDetails.info file and create a reader for it.
-	 * @return BufferedReader to read the DatabaseDetails.info file.
-	 * @throws FileNotFoundException when DatabaseDetails.info is not correctly located.
-	 * @since 1.0
-	 */
-	private static BufferedReader getDatabaseDetailsFileReader() throws FileNotFoundException {
-		final String FILENAME = "DatabaseDetails.info";
-		
-		File accountDetails = new File(FILENAME);
-		
-		if (!accountDetails.isFile()) {
-			throw new FileNotFoundException("DatabaseDetails.info file not found in root folder. If URL, account"
-					+ "name, and password are directly in the hibernate.cfg.xml folder, configuration will continue.");
-		}
-		
-		return new BufferedReader(new FileReader(accountDetails));
-		
-	}
 }

@@ -78,18 +78,7 @@ class IntegrationTests {
                 .andExpect(content().string("Connection valid, here's a number: 5!"));
     }
 
-    @Test
-    void validateLogin() {
-    }
-
-    @Test
-    void getUserPins() {
-    }
-
-    @Test
-    void updateUser() {
-    }
-
+    /*
     @Test
     void testCreateUserCreatesNewUser() throws Exception {
         User user = testUtil.createTestUser(1);
@@ -104,23 +93,5 @@ class IntegrationTests {
                 .andReturn();
         System.out.println(result.getResolvedException().getMessage());
     }
-
-    @Test
-    void createPin() throws Exception {
-        User user = testUtil.createTestUser(1);
-        Pin pin = testUtil.createTestPin(user, 1);
-        String requestJson = writer.writeValueAsString(pin);
-        System.out.println(requestJson);
-        MvcResult result =  this.mockMvc.perform(post("/createPin")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestJson))
-               // .andExpect(status().isOk())
-                .andReturn();
-        System.out.println(result.getResolvedException().getMessage());
-
-    }
-
-    @Test
-    void deletePin() {
-    }
+    */
 }
