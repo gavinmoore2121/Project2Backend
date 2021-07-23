@@ -39,12 +39,12 @@ public class Pin {
 
   public Pin() {}
   
-  public Pin(String name, String desc, double latitude, double longitude, String ownerUsername) {
+  public Pin(String name, String desc, double latitude, double longitude, User owner) {
     this.name = name;
     this.desc = desc;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.owner = ownerUsername;
+    this.owner = owner;
   }
 
   public int getId() {
