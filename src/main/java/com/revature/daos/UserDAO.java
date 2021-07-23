@@ -20,7 +20,7 @@ public interface UserDAO extends GenericDAO {
      * @param email the email of the user to find.
      * @return The User with the given email, or null.
      */
-    static User getUserByEmail(String email) {
+    default User getUserByEmail(String email) {
         return GenericDAO.getEntityByID(User.class, email);
     }
 
@@ -28,7 +28,7 @@ public interface UserDAO extends GenericDAO {
      * Return all users currently saved in the database.
      * @return A list of all user objects in the database.
      */
-    static List<User> getAllUsers() {
+    default List<User> getAllUsers() {
         return GenericDAO.getAllEntities(User.class);
     }
 
@@ -37,7 +37,7 @@ public interface UserDAO extends GenericDAO {
      * @param email the email of the user.
      * @return A list of all user pins.
      */
-    static List<Pin> getAllUserPinsByEmail(String email) {
+    default List<Pin> getAllUserPinsByEmail(String email) {
         return getAllUserPinsFromUser(getUserByEmail(email));
     }
 
@@ -46,7 +46,7 @@ public interface UserDAO extends GenericDAO {
      * @param user the user.
      * @return A list of all user pins.
      */
-    static List<Pin> getAllUserPinsFromUser(User user) {
+    default List<Pin> getAllUserPinsFromUser(User user) {
         return user.getUserPins();
     }
 
@@ -54,7 +54,7 @@ public interface UserDAO extends GenericDAO {
      * Updates all fields of the database entry with the matching email to the properties of the user.
      * @param user the user with updated properties.
      */
-    static void updateUser(User user) {
+    default void updateUser(User user) {
         GenericDAO.update(user);
     }
 
@@ -62,7 +62,7 @@ public interface UserDAO extends GenericDAO {
      * Delete the user with the matching email.
      * @param user the user to delete.
      */
-    static void deleteUser(User user) {
+    default void deleteUser(User user) {
         GenericDAO.delete(user);
     }
 
@@ -70,7 +70,7 @@ public interface UserDAO extends GenericDAO {
      * Save a user as a new database entry.
      * @param user the user to save.
      */
-    static void saveUser(User user) {
+    default void saveUser(User user) {
         GenericDAO.save(user);
     }
 
