@@ -35,7 +35,8 @@ public class MappingService implements PinDAO, UserDAO {
     /**
      * Validate a user's login, and return the user with the given email or a not-found message.
      * @param loginForm: A JSON object containing the fields username and password, containing the user-input
-     *                 email and password attempt respectively.
+     *                 email and password attempt respectively. Appropriately formatted JSON is '"username":
+     *                 "userInputUsername", "password": "userInputPassword"'.
      * @return The user's full account as a JSON object, or a not-found response.
      */
     @RequestMapping(value = "/validateLogin", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
