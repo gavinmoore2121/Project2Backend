@@ -28,7 +28,7 @@ public class Pin {
   @Column(name = "longitude")
   private double longitude;
 
-  @ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+  @ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.DETACH}, fetch = FetchType.EAGER)
   @JoinColumn(name="owner_email", referencedColumnName="email", foreignKey = @ForeignKey(name="USER_PIN_OWNER_FK"), nullable= true)
   @JsonBackReference
   private User owner;

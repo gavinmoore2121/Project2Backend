@@ -21,7 +21,7 @@ public class User {
   @Column(name = "password")
   private String password; // might want to encrypt this at some point
 
-  @OneToMany
+  @OneToMany(mappedBy = "owner", orphanRemoval = true, fetch = FetchType.EAGER)
   @JsonManagedReference
   private List<Pin> userPins;
   /*
