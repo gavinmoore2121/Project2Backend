@@ -32,10 +32,6 @@ public class Pin {
   @JoinColumn(name="owner_email", referencedColumnName="email", foreignKey = @ForeignKey(name="USER_PIN_OWNER_FK"), nullable= true)
   @JsonBackReference
   private User owner;
-  /*
-  potential add-ons:
-  category
-   */
 
   public Pin() {}
 

@@ -75,8 +75,7 @@ public class MappingService {
      * @return The created user.
      */
     @PostMapping(value = "/createUser", produces= MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<User> createUser(@RequestBody User user, @Autowired DAOService daoService) {
+    public @ResponseBody ResponseEntity<User> createUser(@RequestBody User user, @Autowired DAOService daoService) {
         daoService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -93,8 +92,6 @@ public class MappingService {
         return new ResponseEntity<>(pin, HttpStatus.OK);
     }
 
-
-    // This one might trigger foreign key constraints and fail, will be tested later.
     /**
      * Delete a pin from the database.
      * @param pin: The pin in JSON format, with the properties "name", "desc", "lat", and "long".
