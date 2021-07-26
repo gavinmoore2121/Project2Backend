@@ -4,10 +4,8 @@ public class LoginForm {
     String username;
     String password;
 
-    public LoginForm() {
-        username = "noEntry";
-        password = "noEntry";
-    }
+    public LoginForm() {}
+
     public LoginForm(String username, String password) {
         this.username = username;
         this.password = password;
