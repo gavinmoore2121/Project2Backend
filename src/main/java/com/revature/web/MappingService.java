@@ -32,8 +32,8 @@ public class MappingService {
     /**
      * Validate a user's login, and return the user with the given email or a not-found message.
      * @param loginForm: A JSON object containing the fields username and password, containing the user-input
-     *                 email and password attempt respectively. Appropriately formatted JSON is '"username":
-     *                 "userInputUsername", "password": "userInputPassword"'.
+     *                 email and password attempt respectively. Appropriately formatted JSON is '{"username":
+     *                 "userInputUsername", "password": "userInputPassword"}'.
      * @return The user's full account as a JSON object, or a null reference.
      */
     @RequestMapping(value = "/validateLogin", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +51,8 @@ public class MappingService {
      */
     @RequestMapping(value= "/getUserPins", method= RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<Pin>> getUserPins(@RequestBody User user) {
+    public ResponseEntity<List<Pin>> getUserPins(@RequestBody User user, @Autowired DAOService daoService) {
+        user = daoService.getUserByEmail(user.getEmail());
         return new ResponseEntity<List<Pin>>(user.getUserPins(), HttpStatus.OK);
     }
 
