@@ -1,0 +1,1 @@
+2021-07-27 09:48:17,639 Cannot add or update a child row: a foreign key constraint fails (`db2`.`PIN`, CONSTRAINT `USER_PIN_OWNER_FK` FOREIGN KEY (`owner_email`) REFERENCES `USER` (`email`))

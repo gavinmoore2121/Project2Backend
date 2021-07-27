@@ -34,15 +34,12 @@ public class LoggerTools {
 	 * 
 	 * @param className: The className to create the logger under.
 	 * @return: The configured root logger.
-	 * @throws IOException if the file log4j.info is not in the root folder.
-	 */
-	public static Logger getAndConfigureLogger(String className) throws FileNotFoundException {
+	 * */
+	public static Logger getAndConfigureLogger(String className){
 		// get configuration file
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		InputStream input = classLoader.getResourceAsStream("log4j.info");
 
-		if (input == null) throw new FileNotFoundException("Please ensure the file log4j.info is within the root folder.");
-		
 		// Retrieve and configure logger.
 		Logger log = Logger.getRootLogger();
 		log.setLevel(Level.ALL);

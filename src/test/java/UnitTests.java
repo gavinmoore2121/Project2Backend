@@ -1,5 +1,3 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.revature.daos.DAOService;
 import com.revature.entities.LoginForm;
 import com.revature.entities.Pin;
@@ -9,7 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
 public class UnitTests {

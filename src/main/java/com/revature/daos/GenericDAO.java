@@ -2,6 +2,8 @@ package com.revature.daos;
 
 
 import com.revature.utilties.hibernate.HibernateUtil;
+import com.revature.utilties.log4j.LoggerTools;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -17,6 +19,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface GenericDAO {
+    Logger logger = LoggerTools.getAndConfigureLogger(null);
 
     /**
      * Retrieve all entities of the given class in the database.
@@ -24,6 +27,7 @@ public interface GenericDAO {
      * @return A list of all entities of the given type stored in the database.
      */
     static <T> List<T> getAllEntities(Class<T> type) {
+        logger.info("Getting all entities");
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaQuery<T> criteria = session.getCriteriaBuilder().createQuery(type);
         criteria.from(type);
@@ -39,6 +43,7 @@ public interface GenericDAO {
      * @return The entity with the given primary key.
      */
     static <T, ID extends Serializable> T getEntityByID(Class<T> type, ID uniqueID) {
+        logger.info("Getting entity by ID: " + uniqueID);
         Session session = HibernateUtil.getSessionFactory().openSession();
         T result = session.get(type, uniqueID);
         session.close();
@@ -50,6 +55,7 @@ public interface GenericDAO {
      * @param entity The entity to save, defined in javax.persistence.
      */
     static <T> void save(T entity) {
+        logger.info("Saving entity.");
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = session.beginTransaction();
         session.save(entity);
@@ -62,6 +68,7 @@ public interface GenericDAO {
      * @param entity The pre-existing entity to update, defined in javax.persistence.
      */
     static <T> void update(T entity) {
+        logger.info("Updating entity.");
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = session.beginTransaction();
         session.update(entity);
@@ -74,6 +81,7 @@ public interface GenericDAO {
      * @param entity The pre-existing entity to delete, defined in javax.persistence.
      */
     static <T> void delete(T entity) {
+        logger.info("Deleting entity.");
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction trans = session.beginTransaction();
         session.delete(entity);
