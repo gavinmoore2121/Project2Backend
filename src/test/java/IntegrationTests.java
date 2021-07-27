@@ -90,15 +90,12 @@ class IntegrationTests {
         User user = testUtil.createTestUser(1);
 
         String requestJson = writer.writeValueAsString(user);
-        System.out.println(requestJson);
 
         MvcResult result = this.mockMvc.perform(post("/createUser")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson)
                 .accept(MediaType.APPLICATION_JSON))
-                //.andExpect(status().isOk())
                 .andReturn();
-        result.getResolvedException().printStackTrace();
     }
 
 }
